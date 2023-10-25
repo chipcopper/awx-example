@@ -1,0 +1,25 @@
+---
+- hosts: lab
+  gather_facts: False
+  collections:
+    - brocade.fos
+
+  vars:
+    credential:
+      fos_ip_addr: "{{fos_ip_addr}}"
+      fos_user_name: "{{fos_user_name}}"
+      fos_password: "{{fos_password}}"
+      https: "{{fos_https}}"
+
+  tasks:
+
+  - name: gather facts
+    brocade_facts:
+      credential: "{{credential}}"
+      vfid: -1
+      gather_subset:
+        - brocade_chassis_chassis
+
+  - name: print ansible_facts gathered
+    debug:
+      var: ansible_facts
